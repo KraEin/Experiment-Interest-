@@ -1,0 +1,44 @@
+CREATE TABLE movies (
+    movie_id INT PRIMARY KEY,
+    title VARCHAR(100),
+    release_year INT,
+    genre VARCHAR(50),
+    budget BIGINT,
+    revenue BIGINT
+);
+
+CREATE TABLE actors (
+    actor_id INT PRIMARY KEY,
+    actor_name VARCHAR(50),
+    birth_year INT
+);
+
+CREATE TABLE ratings (
+    rating_id INT PRIMARY KEY,
+    movie_id INT,
+    user_id INT,
+    rating DECIMAL(3,1)
+);
+
+INSERT INTO movies VALUES
+(1, 'Space Odyssey', 2020, 'Sci-Fi', 200000000, 500000000),
+(2, 'Mountain Shadow', 2018, 'Drama', 50000000, 150000000),
+(3, 'Robot Dreams', 2022, 'Sci-Fi', 150000000, NULL);
+
+INSERT INTO actors VALUES
+(101, 'Alice Chen', 1990),
+(102, 'Bob Smith', 1985),
+(103, 'Emma Johnson', 1992);
+
+INSERT INTO ratings VALUES
+(1001, 1, 1, 4.5),
+(1002, 1, 2, 4.8),
+(1003, 2, 3, 3.9),
+(1004, 2, 4, NULL);
+
+SELECT 
+    m.title,
+    AVG(r.rating) AS avg_rating
+FROM movies m
+LEFT JOIN ratings r ON m.movie_id = r.movie_id
+GROUP BY m.title;
